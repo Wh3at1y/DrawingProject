@@ -19,7 +19,7 @@ public class AppFrame extends JFrame
 			this.setContentPane(panel);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setTitle("Drawing Project");
-			this.setSize(500,500);
+			this.setSize(800,800);
 			this.setResizable(false);
 			this.setVisible(true);
 		}
