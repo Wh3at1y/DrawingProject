@@ -20,11 +20,15 @@ public class AppPanel extends JPanel
 		private JButton addTriangleButton;
 		private JButton addPolygonButton;
 
+		private JTextField loopField;
+
+		private int amount;
+
 		public AppPanel(AppController controller)
 			{
 				layout = new SpringLayout();
 				shapePanel = new ShapePanel();
-				
+
 				clearButton = new JButton("Clear Drawings");
 				addPolygonButton = new JButton("Add a Polygon");
 				addTriangleButton = new JButton("Add a Triangle");
@@ -32,6 +36,10 @@ public class AppPanel extends JPanel
 				addRecButton = new JButton("Add a Rektangle");
 				addSquareButton = new JButton("Add a Square");
 				addEllipseButton = new JButton("Add a Ellipse");
+
+				loopField = new JTextField();
+				layout.putConstraint(SpringLayout.WEST, loopField, 0, SpringLayout.EAST, clearButton);
+				loopField.setText("1");
 
 				buildComponents();
 				buildListeners();
@@ -50,6 +58,8 @@ public class AppPanel extends JPanel
 				add(addTriangleButton);
 				add(addPolygonButton);
 				add(clearButton);
+
+				add(loopField);
 			}
 
 		private void buildListeners()
@@ -61,62 +71,87 @@ public class AppPanel extends JPanel
 								shapePanel.clear();
 							}
 					});
-				
+
 				addPolygonButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addPolygon();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+									shapePanel.addPolygon();
 							}
 					});
-				
+
 				addTriangleButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addTriangle();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+										shapePanel.addTriangle();
 							}
 					});
-				
+
 				addCircleButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addCircle();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+										shapePanel.addCircle();
 							}
 					});
-				
+
 				addRecButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addRectangle();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+										shapePanel.addRectangle();
 							}
 					});
-				
+
 				addSquareButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addSquare();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+									shapePanel.addSquare();
 							}
 					});
-				
+
 				addEllipseButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								shapePanel.addEllipse();
+								loopChecker();
+								for (int loop = 0; loop < amount; loop++)
+									shapePanel.addEllipse();
 							}
 					});
 			}
 
+		private void loopChecker()
+			{
+				if (loopField.getText().isEmpty())
+					loopField.setText("1");
+				
+				amount = Integer.parseInt(loopField.getText());
+				
+				if(amount > 2000)
+					loopField.setText("1000");
+				
+				amount = Integer.parseInt(loopField.getText());
+			}
+
 		private void buildPlacements()
 			{
+				layout.putConstraint(SpringLayout.EAST, clearButton, -50, SpringLayout.EAST, shapePanel);
 				layout.putConstraint(SpringLayout.NORTH, clearButton, 6, SpringLayout.SOUTH, shapePanel);
 				layout.putConstraint(SpringLayout.WEST, clearButton, 10, SpringLayout.WEST, shapePanel);
 				layout.putConstraint(SpringLayout.SOUTH, clearButton, 39, SpringLayout.SOUTH, shapePanel);
-				layout.putConstraint(SpringLayout.EAST, clearButton, -10, SpringLayout.EAST, shapePanel);
 				layout.putConstraint(SpringLayout.SOUTH, shapePanel, -49, SpringLayout.SOUTH, this);
 				layout.putConstraint(SpringLayout.NORTH, addPolygonButton, 4, SpringLayout.NORTH, this);
 				layout.putConstraint(SpringLayout.WEST, addPolygonButton, 10, SpringLayout.WEST, this);
@@ -138,6 +173,9 @@ public class AppPanel extends JPanel
 				layout.putConstraint(SpringLayout.NORTH, addSquareButton, 4, SpringLayout.NORTH, this);
 				layout.putConstraint(SpringLayout.WEST, addSquareButton, 529, SpringLayout.WEST, this);
 				layout.putConstraint(SpringLayout.EAST, addSquareButton, -6, SpringLayout.WEST, addTriangleButton);
+				layout.putConstraint(SpringLayout.NORTH, loopField, 0, SpringLayout.NORTH, clearButton);
+				layout.putConstraint(SpringLayout.SOUTH, loopField, 0, SpringLayout.SOUTH, clearButton);
+				layout.putConstraint(SpringLayout.EAST, loopField, -10, SpringLayout.EAST, this);
 			}
-		
+
 	}
